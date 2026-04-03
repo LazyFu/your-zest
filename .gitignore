@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Local runtime artifacts
+*.log
+logs/
+
+# Local environment files
+.env
+.env.*
+
+# SQLite data
+*.db
+*.db-shm
+*.db-wal
