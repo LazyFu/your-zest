@@ -94,13 +94,13 @@ def parse_entry(entry: Any) -> dict[str, str | None]:
 
 
 def score_item(item: FeedItem, keywords: list[str]) -> int:
+    """Return the number of keyword matches in the item's title and summary."""
     if not keywords:
-        return 1
-
+        return 0
     haystack = f"{item.title} {item.summary}".lower()
     score = 0
     for keyword in keywords:
-        if keyword and keyword in haystack:
+        if keyword and keyword.lower() in haystack:
             score += 1
     return score
 
@@ -114,11 +114,7 @@ def rank_item(
     text = f"{item.title} {item.summary}".lower()
     tokens = set(re_split_terms(text))
 
-    keyword_hits = 0
-    for keyword in keywords:
-        if keyword and keyword.lower() in text:
-            keyword_hits += 1
-    keyword_score = 1.4 * keyword_hits
+    keyword_score = 1.4 * score_item(item, keywords)
 
     interest_score = 0.0
     for token in tokens:
